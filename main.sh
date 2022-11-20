@@ -24,7 +24,15 @@ gc() {
 alias fetch='git fetch && git status'
 
 # Push current branch
-alias push='[[ "$(branch)" ]] && git push origin "$(branch)" || { incolor 1 echo "Not on a branch" && return 1 ;}'
+push() {
+    if [[ "$(branch)" ]]
+    then
+        git push origin "$(branch)" $@
+    else
+        incolor 1 echo "Not on a branch"
+        return 1
+    fi
+}
 
 alias ll='ls -l'
 
