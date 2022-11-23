@@ -67,7 +67,7 @@ incolor() {
 POWER_STATUS="$(pmset -g batt)"
 echo "$POWER_STATUS" | incolor 8 head -n 1
 echo "$POWER_STATUS" | tail -n 1 | grep -oE '[0-9]+%.*present' | sed 's/present.*//' | \
-    GREP_COLOR='0;31' incolor 8 grep --color=always 'discharging\|$'
+    GREP_COLOR='0;31' incolor 8 grep --color=always '^[0-9]%\|[1-3][0-9]%\|discharging\|$'
 
 [[ -d .git ]] && echo "On branch $(incolor 10 echo $(branch))"
 
