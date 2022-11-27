@@ -68,8 +68,6 @@ then
     else
         incolor 8 nvm use
     fi
-else
-    incolor 8 echo "No .nvmrc found"
 fi
 
 # Display power status (MacOS)
