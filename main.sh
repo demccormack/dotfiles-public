@@ -62,9 +62,9 @@ incolor() {
 
 if [[ -f .nvmrc ]]
 then
-    if node -v | grep -q "$(cat .nvmrc)"
+    if ACTIVE_NODE_VERSION=$(node -v | grep "$(cat .nvmrc)")
     then
-        incolor 8 echo "Already using correct node $(node -v)"
+        incolor 8 echo "Already using correct node $ACTIVE_NODE_VERSION"
     else
         incolor 8 nvm use
     fi
