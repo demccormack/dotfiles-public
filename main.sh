@@ -41,7 +41,7 @@ alias cl='i=0; while [ "$((i++))" -le 20 ]; do echo . ; done; clear'
 
 # Show a side-by-side diff easily
 vdiff() {
-    diff -y <(fold -s -w72 "$1") <(fold -s -w72 "$2") -W 200
+    diff -y <(fold -s -w72 "$1") <(fold -s -w72 "$2") -W 200 ${@:3}
 }
 
 # Run a commnd and show the output in the specified color
