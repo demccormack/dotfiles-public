@@ -60,8 +60,17 @@ incolor() {
 
 ### PROMPT ###
 
-# Use the version of node specified in the repo
-[[ -f .nvmrc ]] && incolor 8 nvm use || incolor 8 echo "No .nvmrc found"
+if [[ -f .nvmrc ]]
+then
+    if node -v | grep -q "$(cat .nvmrc)"
+    then
+        incolor 8 echo "Already using correct node $(node -v)"
+    else
+        incolor 8 nvm use
+    fi
+else
+    incolor 8 echo "No .nvmrc found"
+fi
 
 # Display power status (MacOS)
 POWER_STATUS="$(pmset -g batt)"
