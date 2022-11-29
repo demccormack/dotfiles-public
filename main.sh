@@ -71,10 +71,13 @@ then
 fi
 
 # Display power status (MacOS)
-POWER_STATUS="$(pmset -g batt)"
-echo "$POWER_STATUS" | incolor 8 head -n 1
-echo "$POWER_STATUS" | tail -n 1 | grep -oE '[0-9]+%.*present' | sed 's/present.*//' | \
-    GREP_COLOR='0;31' incolor 8 grep --color=always '^[0-9]%\|[1-3][0-9]%\|discharging\|$'
+if [[ "$(which pmset)" ]]
+then
+    POWER_STATUS="$(pmset -g batt)"
+    echo "$POWER_STATUS" | incolor 8 head -n 1
+    echo "$POWER_STATUS" | tail -n 1 | grep -oE '[0-9]+%.*present' | sed 's/present.*//' | \
+        GREP_COLOR='0;31' incolor 8 grep --color=always '^[0-9]%\|[1-3][0-9]%\|discharging\|$'
+fi
 
 [[ -d .git ]] && echo "On branch $(incolor 10 echo $(branch))"
 
