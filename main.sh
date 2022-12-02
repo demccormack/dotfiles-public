@@ -36,6 +36,8 @@ push() {
 
 alias ll='ls -l'
 
+[[ "$GREP_COLOR" ]] || alias grep='GREP_COLOR="0;32" grep --color=always'
+
 # Clear the terminal and leave a gap in the scrollback
 alias cl='i=0; while [ "$((i++))" -le 20 ]; do echo . ; done; clear'
 
