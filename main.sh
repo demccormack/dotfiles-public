@@ -79,6 +79,7 @@ then
         GREP_COLOR='0;31' incolor 8 grep --color=always '^[0-9]%\|[1-3][0-9]%\|discharging\|$'
 fi
 
-[[ -d .git ]] && echo "On branch $(incolor 10 echo $(branch))"
+# Print current branch, if we are inside a repo
+! [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]] || echo "On branch $(incolor 10 echo $(branch))"
 
 
