@@ -12,6 +12,10 @@ export EDITOR=/usr/bin/vim
 
 ### UTILITIES ###
 
+# Delete all Docker containers/images
+alias delcontainers="docker ps -a | tail +2 | awk '{print \$1}' | xargs docker rm"
+alias delimages="docker images | tail +2 | awk '{print \$3}' | xargs docker rmi"
+
 alias branch='git branch --show-current'
 
 # Auto-fill Jira issue in commit template
