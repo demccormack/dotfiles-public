@@ -12,9 +12,12 @@ export EDITOR=/usr/bin/vim
 
 ### UTILITIES ###
 
+! [[ "$(uname)" == "Linux" ]] || DOCKER_AS=sudo
+alias docker="${DOCKER_AS:-} docker"
+
 # Delete all Docker containers/images
-alias delcontainers="docker ps -a | tail +2 | awk '{print \$1}' | xargs docker rm"
-alias delimages="docker images | tail +2 | awk '{print \$3}' | xargs docker rmi"
+alias delcontainers="${DOCKER_AS:-} docker ps -a | tail +2 | awk '{print \$1}' | xargs ${DOCKER_AS:-} docker rm"
+alias delimages="${DOCKER_AS:-} docker images | tail +2 | awk '{print \$3}' | xargs ${DOCKER_AS:-} docker rmi"
 
 alias branch='git branch --show-current'
 
