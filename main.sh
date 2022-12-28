@@ -75,7 +75,7 @@ then
 fi
 
 # Display power status (MacOS)
-if [[ "$(which pmset)" ]]
+if [[ "$(uname)" == "Darwin" ]]
 then
     POWER_STATUS="$(pmset -g batt)"
     echo "$POWER_STATUS" | incolor 8 head -n 1
