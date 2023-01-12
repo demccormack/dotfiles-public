@@ -43,8 +43,8 @@ push() {
 
 alias ll='ls -l'
 
-# Clear the terminal and leave a gap in the scrollback
-alias cl='i=0; while [ "$((i++))" -le 20 ]; do echo . ; done; clear'
+# Leave a gap in the terminal scrollback
+alias cl='i=0; while [ "$((i++))" -le 20 ]; do echo; done'
 
 # Show a side-by-side diff easily
 vdiff() {
