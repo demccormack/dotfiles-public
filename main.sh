@@ -5,9 +5,10 @@
 DOTFILES_DIR="$(dirname ${BASH_SOURCE[0]:-$0})"
 
 
-### ENV VARS ###
+### VIM SETUP ###
 
 export EDITOR=/usr/bin/vim
+ln -snf "$DOTFILES_DIR/.vimrc" ~/.vimrc
 
 
 ### UTILITIES ###
