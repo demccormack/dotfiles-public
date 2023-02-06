@@ -20,6 +20,12 @@ alias docker="${DOCKER_AS:-} docker"
 alias delcontainers="${DOCKER_AS:-} docker ps -a | tail +2 | awk '{print \$1}' | xargs ${DOCKER_AS:-} docker rm"
 alias delimages="${DOCKER_AS:-} docker images | tail +2 | awk '{print \$3}' | xargs ${DOCKER_AS:-} docker rmi"
 
+# Stash any local changes, then begin an interactive rebase for the last n commits.
+# n is the first argument. Any additional arguments will be apended to the rebase command.
+rebase() {
+    git stash && git rebase -i "HEAD~$1" ${@:2}
+}
+
 alias branch='git branch --show-current'
 
 # Auto-fill Jira issue in commit template
