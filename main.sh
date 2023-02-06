@@ -44,6 +44,18 @@ push() {
 
 alias ll='ls -l'
 
+# Retry a command until it succeeds
+retry() {
+	RETRY_COUNT=0 
+	while ! $@
+	do
+		((++RETRY_COUNT))
+		echo "Failed $RETRY_COUNT times, retrying..."
+		sleep 0.5 # to allow keyboard interrupts
+	done
+	echo Done
+}
+
 # Leave a gap in the terminal scrollback
 alias cl='i=0; while [ "$((i++))" -le 20 ]; do echo; done'
 
