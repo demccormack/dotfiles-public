@@ -50,12 +50,18 @@ push() {
 
 alias ll='ls -l'
 
-# Retry a command until it succeeds
+# Retry a command until it succeeds, or 10 tries if session not interactive
 retry() {
-	RETRY_COUNT=0 
+	RETRY_COUNT=0
+    MAX_RETRIES=10
 	while ! $@
 	do
 		((++RETRY_COUNT))
+        if [[ "$TERM" == dumb ]] && [[ "$RETRY_COUNT" -ge "$MAX_RETRIES" ]]
+        then
+            echo "Failed $RETRY_COUNT times, aborting!"
+            return 1
+        fi
 		echo "Failed $RETRY_COUNT times, retrying..."
 		sleep 0.5 # to allow keyboard interrupts
 	done
