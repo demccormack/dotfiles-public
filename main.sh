@@ -50,6 +50,8 @@ push() {
 
 alias ll='ls -l'
 
+! [[ "$(uname)" == "Darwin" ]] || alias sha256sum='shasum -a 256'
+
 # Retry a command until it succeeds, or 10 tries if session not interactive
 retry() {
 	RETRY_COUNT=0
