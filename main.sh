@@ -31,8 +31,11 @@ alias branch='git branch --show-current'
 
 # Auto-fill Jira issue in commit template
 gc() {
-    ISSUE=$(branch | grep -oE "$ISSUE_REGEX")
-    sed "s,ISSUE,$ISSUE,g" "$DOTFILES_DIR"/.git-commit-template.orig > ~/.git-commit-template
+    if [[ "$ISSUE_REGEX" ]]
+    then
+        ISSUE=$(branch | grep -oE "$ISSUE_REGEX")
+        sed "s,ISSUE,$ISSUE,g" "$DOTFILES_DIR"/.git-commit-template.orig > ~/.git-commit-template
+    fi
     git commit $@
 }
 
