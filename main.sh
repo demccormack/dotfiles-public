@@ -21,6 +21,17 @@ alias docker="${DOCKER_AS:-} docker"
 alias delcontainers="${DOCKER_AS:-} docker ps -a | tail +2 | awk '{print \$1}' | xargs ${DOCKER_AS:-} docker rm"
 alias delimages="${DOCKER_AS:-} docker images | tail +2 | awk '{print \$3}' | xargs ${DOCKER_AS:-} docker rmi"
 
+# List the processes blocking a port (or pass --kill to kill them)
+port() {
+    PORT=$(sed 's/[[:space:]]*--kill[[:space:]]*//' <<< "$@")
+    if grep -q '\-\-kill' <<< "$@"
+    then
+        lsof -n -i :"$PORT" | grep LISTEN | awk '{print $2}' | xargs kill -9
+    else
+        lsof -n -i :"$PORT" | grep LISTEN
+    fi
+}
+
 # Stash any local changes, then begin an interactive rebase for the last n commits.
 # n is the first argument. Any additional arguments will be apended to the rebase command.
 rebase() {
