@@ -40,6 +40,18 @@ rebase() {
 
 alias branch='git branch --show-current'
 
+# Git branch bash completion
+if [ -f "$DOTFILES_DIR/git-completion.bash" ]; then
+  . "$DOTFILES_DIR/git-completion.bash" 
+  
+  # Add git completion to aliases
+  __git_complete g __git_main
+  __git_complete checkout _git_checkout
+fi
+
+alias g="git"
+alias checkout="incolor 10 git checkout"
+
 # Auto-fill Jira issue in commit template
 gc() {
     if [[ "$ISSUE_REGEX" ]] && ! grep -q '\-\-amend' <<< "$@"
