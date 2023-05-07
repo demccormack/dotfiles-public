@@ -63,6 +63,12 @@ push() {
     fi
 }
 
+# Rollback specific ActiveRecord migration without changing any of the ones in-between
+# For local use only
+rollback() {
+    bundle exec rake db:migrate:down VERSION="$1"
+}
+
 alias ll='ls -l'
 
 ! [[ "$(uname)" == "Darwin" ]] || alias sha256sum='shasum -a 256'
