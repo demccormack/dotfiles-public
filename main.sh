@@ -57,6 +57,8 @@ push() {
     if [[ "$(branch)" ]]
     then
         git push origin "$(branch)" $@
+        echo
+        incolor 3 echo 'Have you run the tests?'
     else
         incolor 1 echo "Not on a branch"
         return 1
