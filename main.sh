@@ -38,13 +38,13 @@ rebase() {
     git stash && git rebase -i "HEAD~$1" ${@:2}
 }
 
-alias branch='git branch --show-current'
+alias branch='incolor 10 git branch --show-current'
 
 # Auto-fill Jira issue in commit template
 gc() {
     if [[ "$ISSUE_REGEX" ]] && ! grep -q '\-\-amend' <<< "$@"
     then
-        ISSUE=$(branch | grep -oE "$ISSUE_REGEX")
+        ISSUE=$(git branch --show-current | grep -oE "$ISSUE_REGEX")
         sed "s,ISSUE,$ISSUE,g" "$DOTFILES_DIR"/.git-commit-template.orig > ~/.git-commit-template
     fi
     git commit $@
@@ -54,9 +54,10 @@ alias fetch='git fetch && git status'
 
 # Push current branch
 push() {
-    if [[ "$(branch)" ]]
+    CURRENT_BRANCH=$(git branch --show-current)
+    if [[ "$CURRENT_BRANCH" ]]
     then
-        git push origin "$(branch)" $@
+        git push origin "$CURRENT_BRANCH" $@
         echo
         incolor 3 echo 'Have you run the tests?'
     else
@@ -139,6 +140,6 @@ then
     fi
 
     # Print current branch, if we are inside a repo
-    ! [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]] || echo "On branch $(incolor 10 echo $(branch))"
+    ! [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]] || echo "On branch $(incolor 10 git branch --show-current)"
 fi
 
