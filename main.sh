@@ -72,9 +72,6 @@ rollback() {
     bundle exec rake db:migrate:down VERSION="$1"
 }
 
-# Update model annotations every migration
-alias migrate='bundle exec rails db:migrate && bundle exec rake annotate_models'
-
 alias ll='ls -l'
 
 ! [[ "$(uname)" == "Darwin" ]] || alias sha256sum='shasum -a 256'
