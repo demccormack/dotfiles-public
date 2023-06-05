@@ -8,7 +8,7 @@ set -euo pipefail
 [[ "$(uname)" == Darwin ]] || false
 
 DANGER=30
-WARNING=35
+WARNING=40
 
 PERCENT=$(pmset -g batt | grep -oE '[0-9]+%' | sed 's/%//g')
 DISCHARGING=$(pmset -g batt | grep -o discharging) || true
@@ -17,12 +17,12 @@ DISCHARGING=$(pmset -g batt | grep -o discharging) || true
 
 if [[ "$PERCENT" -le "$DANGER" ]]
 then
-    shutdown -s now
+    /sbin/shutdown -s now
 fi
 
 if [[ "$PERCENT" -le "$WARNING" ]]
 then
-    wall <<-EOF
+    /usr/bin/wall <<-EOF
         Battery level ${PERCENT}%
 
         Please plug in to AC power!
