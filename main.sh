@@ -1,6 +1,7 @@
 # Daniel McCormack's customisations
 # This file is sourced by bash and zsh
 
+set -u
 
 DOTFILES_DIR="$(dirname ${BASH_SOURCE[0]:-$0})"
 
@@ -42,7 +43,7 @@ alias branch='incolor 10 git branch --show-current'
 
 # Auto-fill Jira issue in commit template
 gc() {
-    if [[ "$ISSUE_REGEX" ]] && ! grep -q '\-\-amend' <<< "$@"
+    if [[ "${ISSUE_REGEX:-}" ]] && ! grep -q '\-\-amend' <<< "$@"
     then
         ISSUE=$(git branch --show-current | grep -oE "$ISSUE_REGEX")
         sed "s,ISSUE,$ISSUE,g" "$DOTFILES_DIR"/.git-commit-template.orig > ~/.git-commit-template
