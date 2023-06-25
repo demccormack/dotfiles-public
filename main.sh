@@ -119,28 +119,13 @@ incolor() {
 
 ### PROMPT ###
 
-if [[ "$TERM" != dumb ]] # Skip if not an interactive session
+# Use correct node version
+if [[ "$TERM" != dumb ]] && [[ -f .nvmrc ]]
 then
-    if [[ -f .nvmrc ]]
+    if ACTIVE_NODE_VERSION=$(node -v | grep "$(cat .nvmrc)")
     then
-        if ACTIVE_NODE_VERSION=$(node -v | grep "$(cat .nvmrc)")
-        then
-            incolor 8 echo "Already using correct node $ACTIVE_NODE_VERSION"
-        else
-            incolor 8 nvm use
-        fi
+        incolor 8 echo "Already using correct node $ACTIVE_NODE_VERSION"
+    else
+        incolor 8 nvm use
     fi
-
-    # Display power status (MacOS)
-    if [[ "$(uname)" == "Darwin" ]]
-    then
-        POWER_STATUS="$(pmset -g batt)"
-        echo "$POWER_STATUS" | incolor 8 head -n 1
-        echo "$POWER_STATUS" | tail -n 1 | grep -oE '[0-9]+%.*present' | sed 's/present.*//' | \
-            GREP_COLOR='0;31' incolor 8 grep --color=always '^[0-9]%\|[1-3][0-9]%\|discharging\|$'
-    fi
-
-    # Print current branch, if we are inside a repo
-    ! [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]] || echo "On branch $(incolor 10 git branch --show-current)"
 fi
-
