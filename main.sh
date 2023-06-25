@@ -51,6 +51,13 @@ gc() {
     git commit $@
 }
 
+co() {(
+    set -euo pipefail
+    cl
+    git checkout $@
+    branch
+)}
+
 alias fetch='git fetch && git status'
 
 # Push current branch
