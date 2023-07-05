@@ -80,6 +80,11 @@ rollback() {
     bundle exec rake db:migrate:down VERSION="$1"
 }
 
+generate() {
+    bundle exec rails generate $@
+    bundle exec rake rubocop:autoformat
+}
+
 alias ll='ls -l'
 
 ! [[ "$(uname)" == "Darwin" ]] || alias sha256sum='shasum -a 256'
