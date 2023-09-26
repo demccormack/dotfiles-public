@@ -138,6 +138,6 @@ then
     then
         incolor 8 echo "Already using correct node $ACTIVE_NODE_VERSION"
     else
-        incolor 8 nvm use
+        nvm use
     fi
 fi
