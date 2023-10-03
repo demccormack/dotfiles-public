@@ -12,6 +12,8 @@ set -o vi
 export EDITOR=/usr/bin/vim
 ln -snf "$DOTFILES_DIR/.vimrc" ~/.vimrc
 
+# From https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key
+export GPG_TTY=$(tty)
 
 ### UTILITIES ###
 
