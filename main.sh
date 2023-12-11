@@ -54,6 +54,7 @@ gc() {
 }
 
 alias fetch='git fetch && git status'
+alias nohook='git -c core.hooksPath=/dev/null'
 
 # Push current branch
 push() {
