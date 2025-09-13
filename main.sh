@@ -15,6 +15,13 @@ ln -snf "$DOTFILES_DIR/.vimrc" ~/.vimrc
 # From https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key
 export GPG_TTY=$(tty)
 
+# Temporary until VS Code doesn't require these variables to be set
+export VSCODE_PYTHON_AUTOACTIVATE_GUARD
+export P9K_SSH
+export P9K_TTY
+export VSCODE_SHELL_ENV_REPORTING
+export VSCODE_PYTHON_ZSH_ACTIVATE
+
 ### UTILITIES ###
 
 ! [[ "$(uname)" == "Linux" ]] || DOCKER_AS=sudo
