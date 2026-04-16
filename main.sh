@@ -35,12 +35,12 @@ alias delimages="${DOCKER_AS:-} docker images | tail +2 | awk '{print \$3}' | xa
 
 # List the processes blocking a port (or pass --kill to kill them)
 port() {
-    PORT=$(sed 's/[[:space:]]*--kill[[:space:]]*//' <<< "$@")
+    local port=$(sed 's/[[:space:]]*--kill[[:space:]]*//' <<< "$@")
     if grep -q '\-\-kill' <<< "$@"
     then
-        lsof -n -i :"$PORT" | grep LISTEN | awk '{print $2}' | xargs kill -9
+        lsof -n -i :"$port" | grep LISTEN | awk '{print $2}' | xargs kill -9
     else
-        lsof -n -i :"$PORT" | grep LISTEN
+        lsof -n -i :"$port" | grep LISTEN
     fi
 }
 
@@ -56,8 +56,8 @@ alias branch='incolor 10 git branch --show-current'
 gc() {
     if [[ "${ISSUE_REGEX:-}" ]] && ! grep -q '\-\-amend' <<< "$@"
     then
-        ISSUE=$(git branch --show-current | grep -oE "$ISSUE_REGEX")
-        sed "s,ISSUE,$ISSUE,g" "$DOTFILES_DIR"/.git-commit-template.orig > ~/.git-commit-template
+        local issue=$(git branch --show-current | grep -oE "$ISSUE_REGEX")
+        sed "s,ISSUE,$issue,g" "$DOTFILES_DIR"/.git-commit-template.orig > ~/.git-commit-template
     fi
     git commit $@
 }
@@ -67,10 +67,10 @@ alias nohook='git -c core.hooksPath=/dev/null'
 
 # Push current branch
 push() {
-    CURRENT_BRANCH=$(git branch --show-current)
-    if [[ "$CURRENT_BRANCH" ]]
+    local current_branch=$(git branch --show-current)
+    if [[ "$current_branch" ]]
     then
-        git push origin "$CURRENT_BRANCH" $@
+        git push origin "$current_branch" $@
         echo
         incolor 3 echo 'Have you run the tests?'
     else
@@ -96,17 +96,17 @@ alias ll='ls -l'
 
 # Retry a command until it succeeds, or 10 tries if session not interactive
 retry() {
-	RETRY_COUNT=0
-    MAX_RETRIES=10
+	local retry_count=0
+    local max_retries=10
 	while ! $@
 	do
-		((++RETRY_COUNT))
-        if [[ "$TERM" == dumb ]] && [[ "$RETRY_COUNT" -ge "$MAX_RETRIES" ]]
+		((++retry_count))
+        if [[ "$TERM" == dumb ]] && [[ "$retry_count" -ge "$max_retries" ]]
         then
-            echo "Failed $RETRY_COUNT times, aborting!"
+            echo "Failed $retry_count times, aborting!"
             return 1
         fi
-		echo "Failed $RETRY_COUNT times, retrying..."
+		echo "Failed $retry_count times, retrying..."
 		sleep 0.5 # to allow keyboard interrupts
 	done
 	echo Done
@@ -139,9 +139,9 @@ incolor() {
 # Use correct node version
 if [[ "$TERM" != dumb ]] && [[ -f .nvmrc ]]
 then
-    if ACTIVE_NODE_VERSION=$(node -v | grep "$(cat .nvmrc)")
+    if local active_node_version=$(node -v | grep "$(cat .nvmrc)")
     then
-        incolor 8 echo "Already using correct node $ACTIVE_NODE_VERSION"
+        incolor 8 echo "Already using correct node $active_node_version"
     else
         nvm use
     fi
