@@ -139,7 +139,8 @@ incolor() {
 # Use correct node version
 if [[ "$TERM" != dumb ]] && [[ -f .nvmrc ]]
 then
-    if local active_node_version=$(node -v | grep "$(cat .nvmrc)")
+    local active_node_version=$(node -v | grep "$(cat .nvmrc)")
+    if [[ "$active_node_version" ]]
     then
         incolor 8 echo "Already using correct node $active_node_version"
     else
