@@ -144,6 +144,14 @@ then
     then
         incolor 8 echo "Already using correct node $active_node_version"
     else
-        nvm use
+        if command -v nvm > /dev/null
+	then
+	    nvm use
+	else
+	    echo nvm is not installed.
+	    echo "$(node -v) is the current node version."
+	    echo "$(<.nvmrc) is recommended for this project."
+	fi
     fi
 fi
+
