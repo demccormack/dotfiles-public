@@ -22,6 +22,16 @@ export P9K_TTY
 export VSCODE_SHELL_ENV_REPORTING
 export VSCODE_PYTHON_ZSH_ACTIVATE
 
+# Customisations for my phone
+if [[ -n "$TERMUX_VERSION" ]]
+then
+	# Stops OhMyZsh and Termux tripping each other up in nounset mode
+	# Temporary until a better solution is found
+	export TERM_PROGRAM
+
+	alias backup-photos="ssh bier 'cat /mnt/hdd01/doc/scripts/backupPhotos.sh' 2>/dev/null | bash"
+fi
+
 ### UTILITIES ###
 
 ! [[ "$(uname)" == "Linux" ]] || DOCKER_AS=sudo
